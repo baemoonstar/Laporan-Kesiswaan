@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Laporan Kesiswaan 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #1a202c;
+      padding: 20px;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* NAVIGASI ATAS */
+    .top-nav {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+    }
+
+    .top-nav-title {
+      font-weight: 700;
+      font-size: 18px;
+      margin-right: 16px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      background: #667eea;
+      color: white;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .nav-btn:hover {
+      background: #4c51bf;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.secondary {
+      background: #a0aec0;
+    }
+
+    .nav-btn.secondary:hover {
+      background: #718096;
+    }
+
+    /* UMUM SECTION */
+    section {
+      margin-bottom: 32px;
+    }
+
+    .section-card {
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+      border-bottom: 3px solid #e2e8f0;
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #2d3748;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: #718096;
+    }
+
+    .badge-section {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .badge-late {
+      background: #ed8936;
+    }
+
+    .badge-att {
+      background: #4299e1;
+    }
+
+    .badge-prestasi {
+      background: #38a169;
+    }
+
+    .badge-cases {
+      background: #e53e3e;
+    }
+
+    .badge-uks {
+      background: #805ad5;
+    }
+
+    /* GRID & KARTU */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .stat-card.orange {
+      background: linear-gradient(135deg, #f6ad55 0%, #dd6b20 100%);
+      box-shadow: 0 10px 25px rgba(237, 137, 54, 0.4);
+    }
+
+    .stat-card.green {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      box-shadow: 0 10px 25px rgba(72, 187, 120, 0.4);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .stat-number {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 4px 0;
+    }
+
+    .stat-extra {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    /* TABEL */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    th {
+      background: #2d3748;
+      color: white;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    tr:nth-child(even) td {
+      background: #f7fafc;
+    }
+
+    tr:hover td {
+      background: #edf2f7;
+    }
+
+    .note-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .note-warning {
+      background: #fffaf0;
+      border-left: 4px solid #dd6b20;
+      color: #744210;
+    }
+
+    .note-critical {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      color: #742a2a;
+    }
+
+    .note-success {
+      background: #f0fff4;
+      border-left: 4px solid #38a169;
+      color: #22543d;
+    }
+
+    .note-info {
+      background: #ebf8ff;
+      border-left: 4px solid #3182ce;
+      color: #2a4365;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      margin-top: 20px;
+    }
+
+    h3 {
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    ul,
+    ol {
+      margin-left: 18px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-right: 4px;
+      margin-bottom: 2px;
+      background: #edf2f7;
+      color: #4a5568;
+      font-weight: 600;
+    }
+
+    .tag-red {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .tag-yellow {
+      background: #fefcbf;
+      color: #b7791f;
+    }
+
+    .tag-green {
+      background: #c6f6d5;
+      color: #2f855a;
+    }
+
+    .flex-two {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #e2e8f0;
+      font-size: 12px;
+      margin-top: 16px;
+      padding-bottom: 8px;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .top-nav {
+        position: static;
+        box-shadow: none;
+        margin-bottom: 10px;
+      }
+      .section-card {
+        box-shadow: none;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- NAVIGATION -->
+    <div class="top-nav">
+      <div class="top-nav-title">📊 Laporan Kesiswaan 2025</div>
+      <div class="nav-buttons">
+        <button class="nav-btn" data-target="keterlambatan">Keterlambatan</button>
+        <button class="nav-btn" data-target="kehadiran">Kehadiran</button>
+        <button class="nav-btn" data-target="prestasi">Prestasi Panahan</button>
+        <button class="nav-btn" data-target="kasus">Kasus Siswa</button>
+        <button class="nav-btn" data-target="uks">Laporan UKS</button>
+      </div>
+    </div>
+
+    <!-- 1. KETERLAMBATAN -->
+    <section id="keterlambatan">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">1. Laporan Keterlambatan Siswa</div>
+            <div class="section-subtitle">Periode Juli – November 2025</div>
+          </div>
+          <span class="badge-section badge-late">Keterlambatan</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Keterlambatan</div>
+            <div class="stat-number">1.695</div>
+            <div class="stat-extra">kejadian dalam 5 bulan</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-label">Rata-rata per Hari</div>
+            <div class="stat-number">17</div>
+            <div class="stat-extra">siswa terlambat/hari</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Periode Tertinggi</div>
+            <div class="stat-number">Oktober</div>
+            <div class="stat-extra">kenaikan +13,7% dari September</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Alasan Terbanyak</div>
+            <div class="stat-number">68%</div>
+            <div class="stat-extra">kesiangan / bangun telat</div>
+          </div>
+        </div>
+
+        <div class="flex-two">
+          <div>
+            <h3>Tren Bulanan</h3>
+            <div class="chart-container">
+              <canvas id="lateMonthlyChart"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3>Kategori Alasan Keterlambatan</h3>
+            <div class="chart-container">
+              <canvas id="lateReasonChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-warning">
+          <strong>Temuan Kunci Keterlambatan:</strong>
+          <ul>
+            <li>Puncak keterlambatan terjadi pukul 07.30–07.45 WIB.</li>
+            <li>Kelas dengan frekuensi tertinggi: <strong>2B Banin, 3B Banin, 1A Banin</strong>.</li>
+            <li>Siswa dengan frekuensi &gt;15x memerlukan konseling khusus dan komitmen tertulis.</li>
+          </ul>
+        </div>
+
+        <h3>Top 8 Siswa dengan Keterlambatan Tertinggi</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Ranking</th>
+            <th>Nama Siswa</th>
+            <th>Kelas</th>
+            <th>Jumlah Keterlambatan</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr><td>1</td><td>Raddera Muhammad Alfarisi</td><td>3B Banin</td><td>35</td></tr>
+          <tr><td>2</td><td>Raddera Muhammad Uwais</td><td>2B Banin</td><td>34</td></tr>
+          <tr><td>3</td><td>Ahmad Habibi Hasanjani</td><td>4B Banin</td><td>32</td></tr>
+          <tr><td>4</td><td>Mufti Fausta Ismail</td><td>1A Banin</td><td>24</td></tr>
+          <tr><td>5</td><td>Khodijah Asshofiyah</td><td>3A Banat</td><td>18</td></tr>
+          <tr><td>6</td><td>El Jihad Abderraouf Sumarlin</td><td>1A Banin</td><td>18</td></tr>
+          <tr><td>7</td><td>Aldebaran Ahmad Al Fahri Sumarlin</td><td>2B Banin</td><td>18</td></tr>
+          <tr><td>8</td><td>Faiha Hajar Mardhiyyah</td><td>2B Banat</td><td>17</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-info">
+          <strong>Rekomendasi Singkat:</strong>
+          <ol>
+            <li>Konseling individual untuk 8 siswa dengan frekuensi tertinggi.</li>
+            <li>Surat peringatan kepada orang tua siswa dengan keterlambatan &gt;10x.</li>
+            <li>Reward untuk kelas dengan keterlambatan terendah (campaign “On Time Every Day”).</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. KEHADIRAN -->
+    <section id="kehadiran">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">2. Laporan Kehadiran Siswa</div>
+            <div class="section-subtitle">Periode Juli – November 2025 | 542 siswa, 22 kelas</div>
+          </div>
+          <span class="badge-section badge-att">Kehadiran</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card green">
+            <div class="stat-label">Rata-rata Kehadiran (data valid)</div>
+            <div class="stat-number">≈95%</div>
+            <div class="stat-extra">Alfa hanya ±7%</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-label">Compliance Input Absensi</div>
+            <div class="stat-number">≈40%</div>
+            <div class="stat-extra">Mayoritas wali kelas belum konsisten input</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Hari Absensi</div>
+            <div class="stat-number">±850</div>
+            <div class="stat-extra">gabungan Sakit, Izin, Alfa</div>
+          </div>
+        </div>
+
+        <div class="flex-two">
+          <div>
+            <h3>Status Input Absensi per Bulan</h3>
+            <div class="chart-container">
+              <canvas id="attComplianceChart"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3>Breakdown Jenis Absensi</h3>
+            <div class="chart-container">
+              <canvas id="attTypeChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-critical">
+          <strong>Masalah Utama:</strong>
+          <ul>
+            <li>RFID reader sudah tersedia, tetapi data belum otomatis masuk ke sistem manual.</li>
+            <li>November 2025: hanya sekitar <strong>36%</strong> kelas yang menginput absensi.</li>
+            <li>Tanpa perbaikan sistem, data kehadiran sulit dipakai untuk evaluasi akademik maupun kesejahteraan siswa.</li>
+          </ul>
+        </div>
+
+        <h3>Siswa dengan Absensi Tinggi (≥15 hari dalam 5 bulan)</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Nama Siswa</th>
+            <th>Kelas</th>
+            <th>Sakit</th>
+            <th>Izin</th>
+            <th>Alfa</th>
+            <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr><td>Nabila Khadijah Alfian Putri</td><td>2A Banat</td><td>37</td><td>1</td><td>1</td><td><strong>39</strong></td></tr>
+          <tr><td>Rayya Jannata</td><td>2A Banat</td><td>16</td><td>8</td><td>0</td><td><strong>24</strong></td></tr>
+          <tr><td>Fukayna Arsyila Nur Ramadhani</td><td>4A Banat</td><td>17</td><td>0</td><td>0</td><td><strong>17</strong></td></tr>
+          <tr><td>Nasywa Hasnawafiqa</td><td>5 Banat</td><td>17</td><td>0</td><td>0</td><td><strong>17</strong></td></tr>
+          <tr><td>Sofiya Khaira</td><td>3B Banat</td><td>15</td><td>2</td><td>0</td><td><strong>17</strong></td></tr>
+          <tr><td>Kimmi Ramadhani</td><td>6B Banat</td><td>14</td><td>3</td><td>0</td><td><strong>17</strong></td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-info">
+          <strong>Rekomendasi Singkat:</strong>
+          <ol>
+            <li>Integrasi RFID–database dan dashboard real-time kehadiran per kelas.</li>
+            <li>Peringatan otomatis untuk wali kelas yang tidak input absensi 2x berturut-turut.</li>
+            <li>Follow-up kesehatan untuk siswa dengan sakit &gt;10 hari/semester.</li>
+            <li>Reward &amp; punishment untuk compliance input absensi.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PRESTASI PANAHAN -->
+    <section id="prestasi">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">3. Laporan Prestasi Panahan 2025</div>
+            <div class="section-subtitle">Kejuaraan: Piala Danyonif 2025, IMFEST IHBS 2025, Kejuaraan Internasional Palembang</div>
+          </div>
+          <span class="badge-section badge-prestasi">Prestasi</span>
+        </div>
+
+        <div class="note-success">
+          <strong>Gambaran Umum:</strong>
+          <ul>
+            <li>Prestasi tersebar dari level SD hingga SMP, putra maupun putri.</li>
+            <li>Banyak siswa meraih Juara 1–3 di berbagai kategori jarak dan jenis busur.</li>
+            <li>Sudah ada capaian <strong>tingkat internasional</strong> (Palembang).</li>
+          </ul>
+        </div>
+
+        <h3>Daftar Siswa Berprestasi Panahan</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Nama Siswa</th>
+            <th>Kategori &amp; Jarak</th>
+            <th>Kegiatan</th>
+            <th>Prestasi / Keterangan</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr><td>Komachi Al Fatih Rusdi Putra</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Khairan Ahmad Al Fatih</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Hanzholah Rifki Hanifiyah</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Muhammad Ramy Afyzka Al Farras</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Dzaky Aulia Wiguna</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 1 Bantalan</td></tr>
+          <tr><td>Muhammad Azzam Arbiyan</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Abu Bakar Haidar Al Baihaqi</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Ukkasyah Rifki Ubaidillah</td><td>Barebow SD 1–3, 5 m Putra</td><td>Piala Danyonif 2025</td><td>Tidak ikut tanding (sakit)</td></tr>
+
+          <tr><td>Akifa Naila Rosdiana</td><td>Barebow SD 1–3, 5 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Demira Sapphire Andalusia</td><td>Barebow SD 1–3, 5 m Putri</td><td>Piala Danyonif 2025</td><td>Peserta</td></tr>
+          <tr><td>Aisyah Zaskia Salsabila</td><td>Barebow SD 1–3, 5 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 1 Bantalan</td></tr>
+          <tr><td>Kayyisa Almahyra</td><td>Barebow SD 1–3, 5 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+
+          <tr><td>Abdullah Hisyam Hanifan</td><td>Barebow SD 4–6, 7 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Zhafir Hasan</td><td>Barebow SD 4–6, 7 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Muhammad Abdullah Rasyid</td><td>Barebow SD 4–6, 7 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Gaza Abdurrahman Al Hafidz</td><td>Barebow SD 4–6, 7 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Rasyad Zulfaqar Iverzuni</td><td>Barebow SD 4–6, 7 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Hafshah Humaira Masyithah</td><td>Barebow SD 4–6, 7 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+
+          <tr><td>Abdurrahman Zubair</td><td>Standar Nasional SD 1–3, 7 m Putra</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Aisya Aurora Ghina</td><td>Standar Nasional SD 1–3, 7 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 2 Bantalan</td></tr>
+          <tr><td>Cliantha Tanisha Darmawan</td><td>Standar Nasional SD 4–6, 10 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Aghla Rosyida Rastanura</td><td>Standar Nasional SD 4–6, 10 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Afifah Nahda Rafanda</td><td>Standar Nasional SD 4–6, 10 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+          <tr><td>Mahira Anezka Mulyawan</td><td>Standar Nasional SMP, 15 m Putri</td><td>Piala Danyonif 2025</td><td>Juara 3 Bantalan</td></tr>
+
+          <tr><td>Komachi Al Fatih Rusd Putra</td><td>Barebow SD Putra</td><td>IMFEST IHBS 2025</td><td>Juara 2</td></tr>
+          <tr><td>Demira Sapphire Andalusia</td><td>Barebow SD Putri</td><td>IMFEST IHBS 2025</td><td>Juara 2</td></tr>
+
+          <tr><td>M. Zein Ali Farhan</td><td>2B Banin</td><td>Kejuaraan Internasional – Palembang</td><td>Juara 1</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note-info">
+          <strong>Catatan untuk Yayasan:</strong> Prestasi panahan sudah sangat potensial untuk dijadikan program unggulan. Perlu penguatan
+          pembinaan rutin, dukungan sarana latihan, dan publikasi prestasi siswa secara berkala.
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. KASUS SISWA -->
+    <section id="kasus">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">4. Laporan Kasus Siswa</div>
+            <div class="section-subtitle">Pencurian, kekerasan, konten dewasa, dan school refusal</div>
+          </div>
+          <span class="badge-section badge-cases">Kasus Siswa</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card orange">
+            <div class="stat-label">Total Siswa Terlibat</div>
+            <div class="stat-number">12</div>
+            <div class="stat-extra">dengan berbagai tingkat kasus</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Kasus Prioritas Tinggi</div>
+            <div class="stat-number">4</div>
+            <div class="stat-extra">pelecehan seksual &amp; konten dewasa</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Kasus Dalam Penanganan</div>
+            <div class="stat-number">8</div>
+            <div class="stat-extra">sudah ada intervensi</div>
+          </div>
+        </div>
+
+        <div class="flex-two">
+          <div>
+            <h3>Distribusi Kategori Kasus</h3>
+            <div class="chart-container">
+              <canvas id="caseCategoryChart"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3>Ringkasan Kategori</h3>
+            <ul>
+              <li><span class="tag tag-red">Pencurian &amp; Pemerasan</span> (beberapa siswa, mulai kelas 1 hingga 5).</li>
+              <li><span class="tag tag-red">Pelecehan Seksual &amp; Konten Dewasa</span> di kelas 6B Banat.</li>
+              <li><span class="tag tag-yellow">Kekerasan Fisik</span> (membanting teman hingga cedera, pukul-pukulan, dsb).</li>
+              <li><span class="tag">School refusal/anxiety</span> pada siswa kelas 1.</li>
+            </ul>
+
+            <div class="note-critical">
+              <strong>Fokus Utama:</strong>
+              <ul>
+                <li>Kasus SMRS (pelecehan seksual &amp; konten dewasa) wajib assessment psikiater sebelum kembali.</li>
+                <li>Edukasi <em>digital safety</em> untuk kelas 6 dan orang tua.</li>
+                <li>Konseling keluarga bagi kasus pencurian berulang (FAF &amp; KGR).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3>Contoh Kasus Prioritas Tinggi</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Inisial</th>
+            <th>Kelas</th>
+            <th>Kategori</th>
+            <th>Ringkasan</th>
+            <th>Tindakan</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>SMRS</td>
+            <td>6B Banat</td>
+            <td>Pelecehan &amp; Konten Dewasa</td>
+            <td>Pelecehan berulang pada teman, kirim foto tidak pantas, exposure konten dewasa.</td>
+            <td>Skorsing diperpanjang, wajib assessment psikiater.</td>
+            <td><span class="tag tag-red">Dalam proses</span></td>
+          </tr>
+          <tr>
+            <td>NAPS</td>
+            <td>6B Banat</td>
+            <td>Korban Pelecehan</td>
+            <td>Mengalami trauma sebagai korban.</td>
+            <td>Konseling lanjutan, rencana pindah kelas.</td>
+            <td><span class="tag tag-yellow">Dalam pemulihan</span></td>
+          </tr>
+          <tr>
+            <td>KGR</td>
+            <td>5 Banat</td>
+            <td>Pencurian Berulang</td>
+            <td>Pengambilan uang teman (~Rp300.000), riwayat sejak kelas 2 SD.</td>
+            <td>Pertemuan orang tua, konseling.</td>
+            <td><span class="tag tag-yellow">Dijadwalkan</span></td>
+          </tr>
+          <tr>
+            <td>FAF</td>
+            <td>5</td>
+            <td>Pencurian Berulang</td>
+            <td>Pencurian di Alfamart &amp; kantin, pola sejak usia 5 tahun.</td>
+            <td>Konseling keluarga &amp; psikolog.</td>
+            <td><span class="tag tag-red">Butuh tindak lanjut</span></td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="note-info">
+          <strong>Kebutuhan Dukungan Yayasan:</strong>
+          <ul>
+            <li>Anggaran untuk konseling eksternal (psikolog/psikiater).</li>
+            <li>Workshop digital safety &amp; parenting.</li>
+            <li>Revisi tata tertib untuk pelanggaran berat dan SOP penanganan kasus.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. UKS -->
+    <section id="uks">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">5. Laporan Kunjungan UKS</div>
+            <div class="section-subtitle">Periode 8–10 Oktober 2025 | Total 49 kunjungan</div>
+          </div>
+          <span class="badge-section badge-uks">UKS</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Kunjungan</div>
+            <div class="stat-number">49</div>
+            <div class="stat-extra">dalam 3 hari</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-label">Kunjungan Tertinggi</div>
+            <div class="stat-number">19</div>
+            <div class="stat-extra">Jumat, 9 Oktober 2025</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Kelas Terbanyak</div>
+            <div class="stat-number">43%</div>
+            <div class="stat-extra">berasal dari kelas 1 &amp; 2</div>
+          </div>
+        </div>
+
+        <div class="flex-two">
+          <div>
+            <h3>Distribusi Kunjungan per Kelas</h3>
+            <table>
+              <thead>
+              <tr>
+                <th>Kelas</th>
+                <th>Jumlah</th>
+                <th>Persentase</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr><td>1A</td><td>8</td><td>16,3%</td></tr>
+              <tr><td>1B</td><td>6</td><td>12,2%</td></tr>
+              <tr><td>2A</td><td>5</td><td>10,2%</td></tr>
+              <tr><td>2B</td><td>7</td><td>14,3%</td></tr>
+              <tr><td>3B</td><td>5</td><td>10,2%</td></tr>
+              <tr><td>4A</td><td>2</td><td>4,1%</td></tr>
+              <tr><td>5A</td><td>4</td><td>8,2%</td></tr>
+              <tr><td>5B</td><td>6</td><td>12,2%</td></tr>
+              <tr><td>6A</td><td>3</td><td>6,1%</td></tr>
+              <tr><td>6B</td><td>3</td><td>6,1%</td></tr>
+              </tbody>
+            </table>
+
+            <div class="note-warning">
+              <strong>Temuan:</strong> Kelas 1–2 menyumbang kunjungan terbanyak. Ini wajar karena fase adaptasi dan daya tahan tubuh yang
+              masih berkembang, tetapi perlu dipantau.
+            </div>
+          </div>
+
+          <div>
+            <h3>Jenis Keluhan Utama</h3>
+            <div class="chart-container">
+              <canvas id="uksComplaintChart"></canvas>
+            </div>
+
+            <div class="note-info">
+              <strong>Keluhan Serius:</strong>
+              <ul>
+                <li>ISPA / batuk: 4 kasus.</li>
+                <li>Demam tinggi: 6 kasus.</li>
+                <li>Luka yang memerlukan perawatan khusus: 3 kasus.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3>Jenis Tindakan &amp; Penggunaan Obat</h3>
+        <div class="flex-two">
+          <div>
+            <table>
+              <thead>
+              <tr>
+                <th>Jenis Tindakan</th>
+                <th>Jumlah</th>
+                <th>Keterangan</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr><td>Istirahat di UKS</td><td>25</td><td>Tindakan paling sering</td></tr>
+              <tr><td>Pemberian obat oral</td><td>18</td><td>Paracetamol, vitamin</td></tr>
+              <tr><td>Perawatan luka</td><td>10</td><td>Antiseptik, plester</td></tr>
+              <tr><td>Kompres</td><td>6</td><td>Untuk demam</td></tr>
+              <tr><td>Rujukan ke RS/Puskesmas</td><td>2</td><td>Butuh penanganan lanjut</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3>Status Persediaan UKS</h3>
+            <table>
+              <thead>
+              <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Keterangan</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr><td>Paracetamol</td><td><span class="tag tag-red">Perlu restok</span></td><td>Stok menipis</td></tr>
+              <tr><td>Obat sakit perut</td><td><span class="tag tag-green">Cukup</span></td><td>-</td></tr>
+              <tr><td>Antiseptik (Betadine)</td><td><span class="tag tag-green">Cukup</span></td><td>-</td></tr>
+              <tr><td>Plester / perban</td><td><span class="tag tag-yellow">Perlu restok</span></td><td>Penggunaan tinggi</td></tr>
+              <tr><td>Termometer</td><td><span class="tag tag-green">Baik</span></td><td>Berfungsi normal</td></tr>
+              <tr><td>Kassa steril</td><td><span class="tag tag-yellow">Perlu restok</span></td><td>-</td></tr>
+              <tr><td>Minyak kayu putih</td><td><span class="tag tag-green">Cukup</span></td><td>-</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="note-success">
+          <strong>Rekomendasi UKS:</strong>
+          <ol>
+            <li>Segera restok paracetamol, plester, dan kassa steril.</li>
+            <li>Program edukasi: sarapan sebelum sekolah, minum air cukup, cuci tangan.</li>
+            <li>Program kesehatan preventif: penimbangan rutin, pemeriksaan gigi/mata/telinga, program buah/sayur mingguan.</li>
+            <li>Pelatihan P3K lanjutan untuk petugas UKS dan sosialisasi ke orang tua siswa yang sering sakit.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Laporan ini disusun oleh Bagian Kesiswaan
+    </div>
+  </div>
+
+  <script>
+    // Smooth scroll nav
+    document.querySelectorAll(".nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-target");
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 1. Keterlambatan charts
+    const lateMonthlyCtx = document.getElementById("lateMonthlyChart");
+    if (lateMonthlyCtx) {
+      new Chart(lateMonthlyCtx, {
+        type: "line",
+        data: {
+          labels: ["Juli", "Agustus", "September", "Oktober", "November"],
+          datasets: [
+            {
+              label: "Jumlah Keterlambatan",
+              data: [163, 396, 393, 447, 296],
+              borderColor: "#667eea",
+              backgroundColor: "rgba(102,126,234,0.15)",
+              borderWidth: 3,
+              tension: 0.35,
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true },
+          },
+        },
+      });
+    }
+
+    const lateReasonCtx = document.getElementById("lateReasonChart");
+    if (lateReasonCtx) {
+      new Chart(lateReasonCtx, {
+        type: "doughnut",
+        data: {
+          labels: ["Kesiangan", "Macet", "Persiapan lama", "Urusan keluarga", "Lainnya"],
+          datasets: [
+            {
+              data: [68, 11, 9, 7, 5],
+              backgroundColor: ["#667eea", "#f6ad55", "#fc8181", "#68d391", "#b794f4"],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "bottom" },
+          },
+        },
+      });
+    }
+
+    // 2. Kehadiran charts
+    const attComplianceCtx = document.getElementById("attComplianceChart");
+    if (attComplianceCtx) {
+      new Chart(attComplianceCtx, {
+        type: "bar",
+        data: {
+          labels: ["Juli", "Agustus", "September", "Oktober", "November"],
+          datasets: [
+            {
+              label: "Kelas yang input absensi (%)",
+              data: [55, 68, 45, 64, 36],
+              backgroundColor: ["#ecc94b", "#48bb78", "#ecc94b", "#48bb78", "#f56565"],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: (value) => value + "%",
+              },
+            },
+          },
+          plugins: { legend: { display: false } },
+        },
+      });
+    }
+
+    const attTypeCtx = document.getElementById("attTypeChart");
+    if (attTypeCtx) {
+      new Chart(attTypeCtx, {
+        type: "pie",
+        data: {
+          labels: ["Hadir", "Sakit", "Izin", "Alfa"],
+          datasets: [
+            {
+              data: [95, 2.5, 2.2, 0.3],
+              backgroundColor: ["#48bb78", "#ecc94b", "#4299e1", "#f56565"],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "bottom" },
+          },
+        },
+      });
+    }
+
+    // 4. Kasus siswa chart
+    const caseCategoryCtx = document.getElementById("caseCategoryChart");
+    if (caseCategoryCtx) {
+      new Chart(caseCategoryCtx, {
+        type: "bar",
+        data: {
+          labels: [
+            "Pencurian/Pemerasan",
+            "Kekerasan Fisik",
+            "Pelecehan Seksual",
+            "Konten Dewasa",
+            "School Refusal"
+          ],
+          datasets: [
+            {
+              label: "Jumlah siswa/kasus",
+              data: [4, 2, 1, 4, 1],
+              backgroundColor: "#e53e3e",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, precision: 0 },
+          },
+        },
+      });
+    }
+
+    // 5. UKS complaints
+    const uksComplaintCtx = document.getElementById("uksComplaintChart");
+    if (uksComplaintCtx) {
+      new Chart(uksComplaintCtx, {
+        type: "doughnut",
+        data: {
+          labels: [
+            "Pusing/ sakit kepala",
+            "Luka",
+            "Demam",
+            "Sakit perut",
+            "Batuk/ISPA",
+            "Mual/muntah",
+            "Lainnya"
+          ],
+          datasets: [
+            {
+              data: [24.5, 20.4, 12.2, 10.2, 8.2, 6.1, 18.4],
+              backgroundColor: [
+                "#667eea",
+                "#f56565",
+                "#ed8936",
+                "#48bb78",
+                "#4299e1",
+                "#9f7aea",
+                "#a0aec0"
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "bottom" },
+          },
+        },
+      });
+    }
+  </script>
+</body>
+</html>
